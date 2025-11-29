@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модератори - ModSystem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <nav class="navbar">
+        <div class="nav-brand">🛡️ ModSystem</div>
+        <div class="nav-links">
+            <a href="index.html">Головна</a>
+            <a href="candidates.html">Кандидати</a>
+            <a href="moderators.html" class="active">Модератори</a>
+            <a href="training.html">Інструктаж</a>
+        </div>
+    </nav>
 
+    <div class="container">
+        <div class="page-header">
+            <h1>🛡️ Команда модераторів</h1>
+            <button id="addModeratorBtn" class="btn-primary">➕ Додати модератора</button>
+        </div>
+
+        <div class="moderators-stats">
+            <div class="stat-card accent-blue">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="totalModerators">0</span>
+                    <span class="stat-label">Всього модераторів</span>
+                </div>
+            </div>
+            <div class="stat-card accent-green">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="avgTeamRating">0.0</span>
+                    <span class="stat-label">Середній рейтинг</span>
+                </div>
+            </div>
+            <div class="stat-card accent-purple">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="activeCount">0</span>
+                    <span class="stat-label">Активних зараз</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="moderators-grid" id="moderatorsList">
+            <!-- Модераторы будут здесь -->
+        </div>
+    </div>
+
+    <!-- Модальное окно модератора -->
+    <div id="moderatorModal" class="modal">
+        <div class="modal-content">
+            <h3 id="moderatorModalTitle">Додати модератора</h3>
+            <form id="moderatorForm">
+                <div class="form-group">
+                    <label>Ім'я:</label>
+                    <input type="text" id="moderatorName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Discord:</label>
+                    <input type="text" id="moderatorDiscord" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Рейтинг (1-5):</label>
+                    <select id="moderatorRating" class="form-select">
+                        <option value="5">5 - Відмінно</option>
+                        <option value="4">4 - Добре</option>
+                        <option value="3">3 - Задовільно</option>
+                        <option value="2">2 - Погано</option>
+                        <option value="1">1 - Незадовільно</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Статус:</label>
+                    <select id="moderatorStatus" class="form-select">
+                        <option value="active">Активний</option>
+                        <option value="inactive">Неактивний</option>
+                        <option value="vacation">Відпустка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Коментарі/нотатки:</label>
+                    <textarea id="moderatorComments" class="form-textarea" rows="4" placeholder="Особливості роботи, сильні сторони, зауваження..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Зберегти</button>
+                    <button type="button" id="moderatorModalCancel" class="btn-secondary">Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
