@@ -3,67 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Система модерації</title>
+    <title>ModSystem - Панель управління</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-theme">
     <nav class="navbar">
-        <div class="nav-brand">🚀 ModSystem</div>
+        <div class="nav-brand">🛡️ ModSystem</div>
         <div class="nav-links">
             <a href="index.html" class="active">Головна</a>
             <a href="candidates.html">Кандидати</a>
-            <a href="training.html">Навчання</a>
-            <a href="info.html">Інформація</a>
+            <a href="moderators.html">Модератори</a>
+            <a href="training.html">Інструктаж</a>
         </div>
     </nav>
 
     <div class="container">
         <header class="hero">
-            <h1>Система управління модераторами</h1>
-            <p>Інструмент для відбору, навчання та аналітики команди модераторів</p>
+            <h1>Панель управління модераторами</h1>
+            <p>Сучасний інструмент для ефективного керування командою</p>
         </header>
 
-        <div class="dashboard">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>👥 Кандидати</h3>
-                    <span class="stat-number" id="candidatesCount">0</span>
-                    <span class="stat-label">очікують перегляду</span>
-                </div>
-                <div class="stat-card">
-                    <h3>🎓 Навчання</h3>
-                    <span class="stat-number" id="trainingProgress">0%</span>
-                    <span class="stat-label">прогрес команди</span>
-                </div>
-                <div class="stat-card">
-                    <h3>⭐ Рейтинг</h3>
-                    <span class="stat-number" id="avgRating">0.0</span>
-                    <span class="stat-label">середня оцінка</span>
+        <div class="dashboard-grid">
+            <div class="stat-card accent-purple">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="totalCandidates">0</span>
+                    <span class="stat-label">Кандидатів</span>
                 </div>
             </div>
 
-            <div class="quick-actions">
-                <h2>Швидкі дії</h2>
-                <div class="action-buttons">
-                    <a href="candidates.html" class="action-btn">
+            <div class="stat-card accent-blue">
+                <div class="stat-icon">🛡️</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="activeModerators">0</span>
+                    <span class="stat-label">Активних модераторів</span>
+                </div>
+            </div>
+
+            <div class="stat-card accent-green">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="avgRating">0.0</span>
+                    <span class="stat-label">Середній рейтинг</span>
+                </div>
+            </div>
+
+            <div class="stat-card accent-orange">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-info">
+                    <span class="stat-number" id="responseTime">0с</span>
+                    <span class="stat-label">Середній час реакції</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h3>🚨 Останні дії</h3>
+                <div id="recentActivity" class="activity-list">
+                    <!-- Активность будет здесь -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Швидкі дії</h3>
+                <div class="quick-actions">
+                    <a href="candidates.html" class="quick-btn">
                         <span>➕</span>
                         Додати кандидата
                     </a>
-                    <a href="training.html" class="action-btn">
-                        <span>📚</span>
-                        Перейти до навчання
+                    <a href="moderators.html" class="quick-btn">
+                        <span>👥</span>
+                        Переглянути команду
                     </a>
-                    <button class="action-btn" id="importDataBtn">
-                        <span>📊</span>
-                        Імпорт даних
-                    </button>
-                </div>
-            </div>
-
-            <div class="recent-activity">
-                <h2>Остання активність</h2>
-                <div id="activityList" class="activity-list">
-                    <!-- Активность будет здесь -->
+                    <a href="training.html" class="quick-btn">
+                        <span>📚</span>
+                        Провести інструктаж
+                    </a>
                 </div>
             </div>
         </div>
