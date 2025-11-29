@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Навчання - Система модерації</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🚀 ModSystem</div>
+        <div class="nav-links">
+            <a href="index.html">Головна</a>
+            <a href="candidates.html">Кандидати</a>
+            <a href="training.html" class="active">Навчання</a>
+            <a href="info.html">Інформація</a>
+        </div>
+    </nav>
 
+    <div class="container">
+        <header class="page-header">
+            <h1>🎓 Система навчання</h1>
+            <p>Інтерактивні матеріали для підготовки модераторів</p>
+        </header>
+
+        <div class="training-modules">
+            <div class="module-card">
+                <h3>📖 Основні правила</h3>
+                <p>Знайомство з базовими принципами модерації</p>
+                <div class="module-progress">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 75%"></div>
+                    </div>
+                    <span>75%</span>
+                </div>
+                <button class="btn-primary">Продовжити</button>
+            </div>
+
+            <div class="module-card">
+                <h3>⚡ Швидкі рішення</h3>
+                <p>Типові ситуації та алгоритми дій</p>
+                <div class="module-progress">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 30%"></div>
+                    </div>
+                    <span>30%</span>
+                </div>
+                <button class="btn-primary">Почати</button>
+            </div>
+
+            <div class="module-card">
+                <h3>🎯 Складні кейси</h3>
+                <p>Аналіз нестандартних ситуацій</p>
+                <div class="module-progress">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                    <span>0%</span>
+                </div>
+                <button class="btn-primary">Почати</button>
+            </div>
+        </div>
+
+        <div class="tests-section">
+            <h2>Тестування</h2>
+            <div class="test-card">
+                <h3>Тест на знання правил</h3>
+                <p>20 питань • 30 хвилин</p>
+                <button class="btn-primary" onclick="startTest('rules')">Почати тест</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
