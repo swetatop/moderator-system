@@ -1,105 +1,85 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кандидати - ModSystem</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="dark-theme">
-    <nav class="navbar">
-        <div class="nav-brand">🛡️ ModSystem</div>
-        <div class="nav-links">
-            <a href="index.html">Головна</a>
-            <a href="candidates.html" class="active">Кандидати</a>
-            <a href="moderators.html">Модератори</a>
-            <a href="training.html">Інструктаж</a>
-        </div>
-    </nav>
+<div class="card">
+    <h3>📊 Підключення до Google Forms</h3>
+    <button onclick="loadFromSheets()" class="btn-primary">🔄 Завантажити дані з таблиці</button>
+    <p style="color: #888; font-size: 0.9rem; margin-top: 10px;">
+        Таблиця: https://docs.google.com/spreadsheets/d/1aVGnm54JVNr5nPKfk3sqECy1Pi8Fb3FXojC3IKzkOhU/
+    </p>
+</div>
 
-    <div class="container">
-        <div class="page-header">
-            <h1>👥 Управління кандидатами</h1>
-            <div class="header-actions">
-                <button id="syncGoogleForms" class="btn-primary">🔄 Синхронізувати з Google Forms</button>
-                <button id="addCandidateBtn" class="btn-secondary">➕ Додати вручну</button>
-            </div>
-        </div>
+<script>
+async function loadFromSheets() {
+    const SHEET_ID = '1aVGnm54JVNr5nPKfk3sqECy1Pi8Fb3FXojC3IKzkOhU';
+    
+    try {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        
+        if (json.table.rows.length > 0) {
+            processSheetData(json.table);
+            alert(`Успішно завантажено ${json.table.rows.length - 1} кандидатів!`);
+        } else {
+            alert('Таблиця порожня або немає даних');
+        }
+    } catch (error) {
+        console.error('Помилка завантаження:', error);
+        alert('Не вдалося завантажити дані. Можливо, проблема з доступом.');
+    }
+}
 
-        <div class="card">
-            <div class="card-header">
-                <h3>📋 Інструкція підключення Google Forms</h3>
-            </div>
-            <div class="card-content">
-                <ol class="instruction-list">
-                    <li>Відкрий Google Форму з відгуками кандидатів</li>
-                    <li>Перейди в розділ "Відповіді"</li>
-                    <li>Натисни на іконку Google Tables</li>
-                    <li>Скопіюй ID таблиці з адресного рядка</li>
-                    <li>Встав у поле нижче</li>
-                </ol>
-                
-                <div class="form-group">
-                    <label>ID Google Tables:</label>
-                    <input type="text" id="sheetsId" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUU..." class="form-input">
-                    <button id="connectSheets" class="btn-primary">Підключити</button>
-                </div>
-            </div>
-        </div>
+function processSheetData(table) {
+    const rows = table.rows;
+    
+    // Пропускаємо перший рядок (заголовки)
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.c;
+        
+        // Створюємо кандидата з даних комірок
+        // Припускаємо структуру: Час | Ім'я | Discord | Пошта | Інше...
+        const candidate = {
+            id: Date.now() + i,
+            name: cells[1] ? cells[1].v : 'Без імені',
+            discord: cells[2] ? cells[2].v : 'Не вказано',
+            email: cells[3] ? cells[3].v : '',
+            status: 'new',
+            dateAdded: cells[0] ? new Date(cells[0].v).toISOString() : new Date().toISOString(),
+            source: 'google_forms'
+        };
+        
+        // Додаємо всі дані з форми
+        if (table.cols.length > 4) {
+            candidate.additionalData = {};
+            for (let j = 4; j < table.cols.length; j++) {
+                if (cells[j] && table.cols[j]) {
+                    const fieldName = table.cols[j].label || `field_${j}`;
+                    candidate.additionalData[fieldName] = cells[j].v;
+                }
+            }
+        }
+        
+        // Зберігаємо кандидата
+        saveCandidate(candidate);
+    }
+    
+    // Оновлюємо список
+    if (typeof renderCandidates === 'function') {
+        renderCandidates();
+    }
+}
 
-        <div class="filters-bar">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="🔍 Пошук кандидатів..." class="form-input">
-            </div>
-            <select id="statusFilter" class="form-select">
-                <option value="all">Всі статуси</option>
-                <option value="new">Нові</option>
-                <option value="interview">Співбесіда</option>
-                <option value="approved">Схвалені</option>
-                <option value="rejected">Відхилені</option>
-            </select>
-        </div>
-
-        <div id="candidatesList" class="candidates-grid">
-            <!-- Кандидаты будут здесь -->
-        </div>
-    </div>
-
-    <!-- Модальное окно -->
-    <div id="candidateModal" class="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle">Додати кандидата</h3>
-            <form id="candidateForm">
-                <div class="form-group">
-                    <label>Ім'я:</label>
-                    <input type="text" id="candidateName" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label>Discord:</label>
-                    <input type="text" id="candidateDiscord" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label>Статус:</label>
-                    <select id="candidateStatus" class="form-select">
-                        <option value="new">Новий</option>
-                        <option value="interview">Співбесіда</option>
-                        <option value="approved">Схвалений</option>
-                        <option value="rejected">Відхилений</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Нотатки:</label>
-                    <textarea id="candidateNotes" class="form-textarea" rows="4"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Зберегти</button>
-                    <button type="button" id="modalCancel" class="btn-secondary">Скасувати</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+function saveCandidate(candidate) {
+    let candidates = JSON.parse(localStorage.getItem('candidates')) || [];
+    
+    // Перевіряємо, чи немає вже такого кандидата
+    const exists = candidates.some(c => 
+        c.name === candidate.name && c.discord === candidate.discord
+    );
+    
+    if (!exists) {
+        candidates.push(candidate);
+        localStorage.setItem('candidates', JSON.stringify(candidates));
+    }
+}
+</script>
