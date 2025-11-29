@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кандидати - Система модерації</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🚀 ModSystem</div>
+        <div class="nav-links">
+            <a href="index.html">Головна</a>
+            <a href="candidates.html" class="active">Кандидати</a>
+            <a href="training.html">Навчання</a>
+            <a href="info.html">Інформація</a>
+        </div>
+    </nav>
 
+    <div class="container">
+        <header class="page-header">
+            <h1>👥 База кандидатів</h1>
+            <button id="addCandidateBtn" class="btn-primary">➕ Додати кандидата</button>
+        </header>
+
+        <div class="controls">
+            <div class="filters">
+                <select id="statusFilter">
+                    <option value="all">Всі статуси</option>
+                    <option value="new">Нові</option>
+                    <option value="reviewed">Переглянуті</option>
+                    <option value="approved">Схвалені</option>
+                    <option value="rejected">Відхилені</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Пошук по імені...">
+            </div>
+            <button id="exportBtn" class="btn-secondary">📊 Експорт даних</button>
+        </div>
+
+        <div id="candidatesList" class="candidates-grid">
+            <!-- Кандидаты будут здесь -->
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="candidateModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Додати кандидата</h3>
+            <form id="candidateForm">
+                <div class="form-group">
+                    <label>Ім'я:</label>
+                    <input type="text" id="candidateName" required>
+                </div>
+                <div class="form-group">
+                    <label>Discord:</label>
+                    <input type="text" id="candidateDiscord" required>
+                </div>
+                <div class="form-group">
+                    <label>Статус:</label>
+                    <select id="candidateStatus">
+                        <option value="new">Новий</option>
+                        <option value="reviewed">Переглянутий</option>
+                        <option value="approved">Схвалений</option>
+                        <option value="rejected">Відхилений</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Нотатки:</label>
+                    <textarea id="candidateNotes" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Зберегти</button>
+                    <button type="button" id="modalCancel" class="btn-secondary">Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
