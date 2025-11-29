@@ -3,38 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кандидати - Система модерації</title>
+    <title>Кандидати - ModSystem</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-theme">
     <nav class="navbar">
-        <div class="nav-brand">🚀 ModSystem</div>
+        <div class="nav-brand">🛡️ ModSystem</div>
         <div class="nav-links">
             <a href="index.html">Головна</a>
             <a href="candidates.html" class="active">Кандидати</a>
-            <a href="training.html">Навчання</a>
-            <a href="info.html">Інформація</a>
+            <a href="moderators.html">Модератори</a>
+            <a href="training.html">Інструктаж</a>
         </div>
     </nav>
 
     <div class="container">
-        <header class="page-header">
-            <h1>👥 База кандидатів</h1>
-            <button id="addCandidateBtn" class="btn-primary">➕ Додати кандидата</button>
-        </header>
-
-        <div class="controls">
-            <div class="filters">
-                <select id="statusFilter">
-                    <option value="all">Всі статуси</option>
-                    <option value="new">Нові</option>
-                    <option value="reviewed">Переглянуті</option>
-                    <option value="approved">Схвалені</option>
-                    <option value="rejected">Відхилені</option>
-                </select>
-                <input type="text" id="searchInput" placeholder="Пошук по імені...">
+        <div class="page-header">
+            <h1>👥 Управління кандидатами</h1>
+            <div class="header-actions">
+                <button id="syncGoogleForms" class="btn-primary">🔄 Синхронізувати з Google Forms</button>
+                <button id="addCandidateBtn" class="btn-secondary">➕ Додати вручну</button>
             </div>
-            <button id="exportBtn" class="btn-secondary">📊 Експорт даних</button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>📋 Інструкція підключення Google Forms</h3>
+            </div>
+            <div class="card-content">
+                <ol class="instruction-list">
+                    <li>Відкрий Google Форму з відгуками кандидатів</li>
+                    <li>Перейди в розділ "Відповіді"</li>
+                    <li>Натисни на іконку Google Tables</li>
+                    <li>Скопіюй ID таблиці з адресного рядка</li>
+                    <li>Встав у поле нижче</li>
+                </ol>
+                
+                <div class="form-group">
+                    <label>ID Google Tables:</label>
+                    <input type="text" id="sheetsId" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUU..." class="form-input">
+                    <button id="connectSheets" class="btn-primary">Підключити</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-bar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Пошук кандидатів..." class="form-input">
+            </div>
+            <select id="statusFilter" class="form-select">
+                <option value="all">Всі статуси</option>
+                <option value="new">Нові</option>
+                <option value="interview">Співбесіда</option>
+                <option value="approved">Схвалені</option>
+                <option value="rejected">Відхилені</option>
+            </select>
         </div>
 
         <div id="candidatesList" class="candidates-grid">
@@ -49,24 +72,24 @@
             <form id="candidateForm">
                 <div class="form-group">
                     <label>Ім'я:</label>
-                    <input type="text" id="candidateName" required>
+                    <input type="text" id="candidateName" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label>Discord:</label>
-                    <input type="text" id="candidateDiscord" required>
+                    <input type="text" id="candidateDiscord" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label>Статус:</label>
-                    <select id="candidateStatus">
+                    <select id="candidateStatus" class="form-select">
                         <option value="new">Новий</option>
-                        <option value="reviewed">Переглянутий</option>
+                        <option value="interview">Співбесіда</option>
                         <option value="approved">Схвалений</option>
                         <option value="rejected">Відхилений</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Нотатки:</label>
-                    <textarea id="candidateNotes" rows="4"></textarea>
+                    <textarea id="candidateNotes" class="form-textarea" rows="4"></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Зберегти</button>
@@ -76,6 +99,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
